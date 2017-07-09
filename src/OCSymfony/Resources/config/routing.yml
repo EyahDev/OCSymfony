@@ -1,3 +1,20 @@
-hello_the_world:
-    path :    /hello-world
+oc_platform_home:
+    path :    /
     defaults: { _controller: OCSymfonyBundle:Advert:index }
+
+oc_platform_view:
+    path :    /advert/{id}
+    defaults: { _controller: OCSymfonyBundle:Advert:view }
+
+oc_platform_view_slug:
+    path :    /{year}/{slug}.{_format}
+    defaults:
+        _controller: OCSymfonyBundle:Advert:viewSlug
+        format: html
+    requirements:
+        year: \d{4}
+        format: html|xml
+
+oc_platform_add:
+    path :    /add
+    defaults: { _controller: OCSymfonyBundle:Advert:add }
