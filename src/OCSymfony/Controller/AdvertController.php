@@ -8,12 +8,32 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller {
 
+    public function menuAction() {
+        // liste du menu
+        $listAdverts = array(
+            array('id' => 2, 'title' => 'Recherche développeur Symfony'),
+            array('id' => 5, 'title' => 'Mission de webmaster'),
+            array('id' => 9, 'title' => 'Offre de stage webdesigner')
+        );
+
+        // Retourne le menu avec la liste
+        return $this->render('OCSymfonyBundle:Advert:menu.html.twig', array('listAdverts' => $listAdverts));
+    }
+
     public function deleteAction ($id) {
 
         return $this->render('OCSymfonyBundle:Advert:delete.html.twig');
     }
 
     public function editAction ($id, Request $request) {
+
+        $advert = array(
+            'title' => 'Recherche développeur Symfony2',
+            'id' => $id,
+            'author' => 'Alexandre',
+            'content' => 'Nous rechercons un développeur Symfony2 pour débuytant sur Lyon. Bla bla...',
+            'date' => new \DateTime()
+        );
 
         // Vérification si la requête est en POST
         if ($request->isMethod('POST')) {
@@ -24,7 +44,7 @@ class AdvertController extends Controller {
             return $this->redirectToRoute('oc_platform_view', array('id' => 5));
         }
         // Si ce n'est pas POST
-        return $this->render('OCSymfonyBundle:Advert:edit.html.twig');
+        return $this->render('OCSymfonyBundle:Advert:edit.html.twig', array('advert' => $advert));
 
     }
 
@@ -45,17 +65,20 @@ class AdvertController extends Controller {
 
     public function viewAction($id) {
 
-        return $this->render('OCSymfonyBundle:Advert:view.html.twig', array('id' => $id));
+        $advert = array(
+            'title' => 'Recherche développeur Symfony2',
+            'id' => $id,
+            'author' => 'Alexandre',
+            'content' => 'Nous rechercons un développeur Symfony2 pour débuytant sur Lyon. Bla bla...',
+            'date' => new \DateTime()
+        );
+
+        return $this->render('OCSymfonyBundle:Advert:view.html.twig', array('advert' => $advert));
     }
 
     Public function indexAction($page) {
-        // Vérification si la page est inferieur à 1
-        if ($page < 1) {
-            // Affichage d'une page d'erreur 404
-            throw new NotFoundHttpException('La page "'.$page.'" n\'existe pas.');
-        }
 
         // Appel du template
-        return $this->render('OCSymfonyBundle:Advert:view.html.twig');
+        return $this->render('OCSymfonyBundle:Advert:index.html.twig', array('listAdverts' => array()));
     }
 }
