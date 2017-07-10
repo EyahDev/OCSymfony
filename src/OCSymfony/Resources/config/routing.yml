@@ -1,20 +1,33 @@
 oc_platform_home:
-    path :    /
-    defaults: { _controller: OCSymfonyBundle:Advert:index }
+    path :    /{page}
+    defaults:
+        _controller: OCSymfonyBundle:Advert:index
+        page: 1
+    requirements:
+        page: \d*
 
 oc_platform_view:
     path :    /advert/{id}
-    defaults: { _controller: OCSymfonyBundle:Advert:view }
-
-oc_platform_view_slug:
-    path :    /{year}/{slug}.{_format}
     defaults:
-        _controller: OCSymfonyBundle:Advert:viewSlug
-        format: html
+        _controller: OCSymfonyBundle:Advert:view
     requirements:
-        year: \d{4}
-        format: html|xml
+        id: \d+
 
 oc_platform_add:
     path :    /add
-    defaults: { _controller: OCSymfonyBundle:Advert:add }
+    defaults:
+        _controller: OCSymfonyBundle:Advert:add
+
+oc_platform_edit:
+    path :    /edit/{id}
+    defaults:
+        _controller: OCSymfonyBundle:Advert:edit
+    requirements:
+        id: \d+
+
+oc_platform_delete:
+    path :    /delete/{id}
+    defaults:
+        _controller: OCSymfonyBundle:Advert:delete
+    requirements:
+        id: \d+
