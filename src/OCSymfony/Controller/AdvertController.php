@@ -2,13 +2,14 @@
 
 namespace OCSymfony\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdvertController extends Controller {
 
     public function menuAction() {
+
         // liste du menu
         $listAdverts = array(
             array('id' => 2, 'title' => 'Recherche développeur Symfony'),

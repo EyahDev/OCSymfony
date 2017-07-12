@@ -11,7 +11,9 @@
     <body>
         <div class="container">
             <div id="header" class="jumbotron">
-                <h1>Ma plateforme d'annonces</h1>
+                {% block presentation %}
+                    <h1>SuperDevPlateforme.com</h1>
+                {% endblock %}
                 <p>
                     Ce projet et propulsé par Symfony, et construit grâce au MOOC OpenClassrooms et SensioLabs.
                 </p>
@@ -23,11 +25,17 @@
             </div>
             <div class="row">
                 <div id="menu" class="col-md-3">
-                    <h3>Les annonces</h3>
-                    <ul class="nav nav-pulls nav-stacked">
-                        <li><a href="{{ path('oc_platform_home') }}">Accueil</a></li>
-                        <li><a href="{{ path('oc_platform_add') }}">Ajouter une annonce</a></li>
-                    </ul>
+                    {% block plateformes %}
+                        <h3>Les plateformes</h3>
+                        <ul class="nav nav-pulls nav-stacked">
+                            <li><a href="{{ path('tp_core_homepage') }}">Accueil</a></li>
+                            <li><a href="{{ path('oc_platform_home') }}">Annonces d'emplois</a></li>
+                            <li><a href="">Forum</a></li>
+                        </ul>
+                    {% endblock %}
+
+                    {% block rubriques %}
+                    {% endblock %}
 
                     <h4>Dernières annonces</h4>
                     {{ render(controller('OCSymfonyBundle:Advert:menu', {'limit' : 3})) }}
