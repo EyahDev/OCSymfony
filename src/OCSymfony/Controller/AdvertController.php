@@ -3,8 +3,8 @@
 namespace OCSymfony\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller {
 
@@ -50,6 +50,15 @@ class AdvertController extends Controller {
 
     public function addAction(Request $request) {
 
+        // Récupération du service
+        $antispam = $this->container->get('oc_platform.antispam');
+
+        $text = "....";
+
+        if ($antispam->isSpam($text)) {
+            throw new Exception('Votre message  été détecté comme spam');
+        }
+
         // Vérification si la requête est en POST
         if ($request->isMethod('POST')) {
             // Création du message flash de confirmation
@@ -77,6 +86,9 @@ class AdvertController extends Controller {
     }
 
     Public function indexAction($page) {
+
+        // Accès au conteneur
+        $mailer = $this->get('mailer');
 
         // Appel du template
         return $this->render('OCSymfonyBundle:Advert:index.html.twig', array('listAdverts' => array()));
