@@ -21,9 +21,12 @@ class AdvertController extends Controller {
         return $this->render('OCSymfonyPlatformBundle:Advert:menu.html.twig', array('listAdverts' => $listAdverts));
     }
 
-    public function deleteAction ($id) {
+    public function deleteAction ($id, Request $request) {
 
-        return $this->render('OCSymfonyPlatformBundle:Advert:delete.html.twig');
+        $request->getSession()->getFlashBag()->add('info','La page de suppression de l\'annonce n\'est pas encore disponible, merci de revenir plus tard');
+
+        // Appel du template
+        return $this->redirectToRoute('oc_symfony_platform_view', array('id' => $id));
     }
 
     public function editAction ($id, Request $request) {
@@ -42,7 +45,7 @@ class AdvertController extends Controller {
             $request->getSession()->getFlashBag()->add('notice', 'L\'annonce à bien été modifiée');
 
             // Redirection vers la page de visualisation de cette annonce
-            return $this->redirectToRoute('oc_platform_view', array('id' => 5));
+            return $this->redirectToRoute('oc_platform_view', array('id' => $id));
         }
         // Si ce n'est pas POST
         return $this->render('OCSymfonyPlatformBundle:Advert:edit.html.twig', array('advert' => $advert));

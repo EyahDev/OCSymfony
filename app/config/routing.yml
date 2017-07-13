@@ -5,7 +5,3 @@ oc_symfony_core:
 oc_symfony_platform:
     resource: "@OCSymfonyPlatformBundle/Resources/config/routing.yml"
     prefix:   /platform
-
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
