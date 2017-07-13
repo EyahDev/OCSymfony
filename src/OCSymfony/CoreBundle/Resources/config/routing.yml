@@ -1,0 +1,7 @@
+oc_symfony_core_homepage:
+    path:     /
+    defaults: { _controller: OCSymfonyCoreBundle:Core:index }
+
+oc_symfony_core_contact:
+    path:     /contact
+    defaults: { _controller: OCSymfonyCoreBundle:Core:contact }

@@ -1,0 +1,33 @@
+oc_symfony_platform_homepage:
+    path:      /{page}
+    defaults:
+        _controller: OCSymfonyPlatformBundle:Advert:index
+        page:        1
+    requirements:
+        page: \d*
+
+oc_symfony_platform_view:
+    path:      /advert/{id}
+    defaults:
+        _controller: OCSymfonyPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+
+oc_symfony_platform_add:
+    path:      /add
+    defaults:
+        _controller: OCSymfonyPlatformBundle:Advert:add
+
+oc_symfony_platform_edit:
+    path:      /edit/{id}
+    defaults:
+        _controller: OCSymfonyPlatformBundle:Advert:edit
+    requirements:
+        id: \d+
+
+oc_symfony_platform_delete:
+    path:      /delete/{id}
+    defaults:
+        _controller: OCSymfonyPlatformBundle:Advert:delete
+    requirements:
+        id: \d+

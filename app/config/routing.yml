@@ -1,7 +1,11 @@
-tp_core:
-    resource: "@TPCoreBundle/Resources/config/routing.yml"
+oc_symfony_core:
+    resource: "@OCSymfonyCoreBundle/Resources/config/routing.yml"
     prefix:   /
 
 oc_symfony_platform:
-    resource: "@OCSymfonyBundle/Resources/config/routing.yml"
-    prefix:   /platform/
+    resource: "@OCSymfonyPlatformBundle/Resources/config/routing.yml"
+    prefix:   /platform
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation

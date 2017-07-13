@@ -1,0 +1,15 @@
+{% extends "OCSymfonyCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1>Accueil</h1>
+    <p>Ceci est la page de d'accueil de SuperDevPlateforme.com</p>
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info">
+            <p>Message flash : {{ message }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
