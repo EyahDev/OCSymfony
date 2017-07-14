@@ -11,7 +11,9 @@
     <div class="well">
         {{ advert.content }}
     </div>
-
+    {% for message in app.session.flashbag.get('info') %}
+        <p class="alert alert-info">{{ message }}</p>
+    {% endfor %}
     <p>
         <a href="{{ path('oc_symfony_platform_homepage') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>

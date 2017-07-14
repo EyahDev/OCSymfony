@@ -18,4 +18,11 @@ class CoreController extends Controller {
         // Appel du template
         return $this->redirectToRoute('oc_symfony_core_homepage');
     }
+
+    public function forumAction(Request $request) {
+
+        $request->getSession()->getFlashBag()->add('info','Le forum n\'est pas encore disponible, merci de revenir plus tard');
+        // Appel du template
+        return $this->redirectToRoute('oc_symfony_core_homepage');
+    }
 }
