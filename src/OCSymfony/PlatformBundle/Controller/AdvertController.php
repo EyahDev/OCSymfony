@@ -5,6 +5,7 @@ namespace OCSymfony\PlatformBundle\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AdvertController extends Controller {
 
@@ -21,9 +22,9 @@ class AdvertController extends Controller {
         return $this->render('OCSymfonyPlatformBundle:Advert:menu.html.twig', array('listAdverts' => $listAdverts));
     }
 
-    public function deleteAction ($id, Request $request) {
+    public function deleteAction ($id, Request $request, Session $session) {
 
-        $request->getSession()->getFlashBag()->add('info','La page de suppression de l\'annonce n\'est pas encore disponible, merci de revenir plus tard');
+        $session->getFlashBag()->add('info','La page de suppression de l\'annonce n\'est pas encore disponible, merci de revenir plus tard');
 
         // Appel du template
         return $this->redirectToRoute('oc_symfony_platform_view', array('id' => $id));
@@ -41,8 +42,10 @@ class AdvertController extends Controller {
 
         // Vérification si la requête est en POST
         if ($request->isMethod('POST')) {
+
             // Création du message flash de confirmation
-            $request->getSession()->getFlashBag()->add('notice', 'L\'annonce à bien été modifiée');
+
+            $session->getFlashBag()->add('notice', 'L\'annonce à bien été modifiée');
 
             // Redirection vers la page de visualisation de cette annonce
             return $this->redirectToRoute('oc_platform_view', array('id' => $id));
@@ -52,7 +55,7 @@ class AdvertController extends Controller {
 
     }
 
-    public function addAction(Request $request) {
+    public function addAction(Request $request, Session $session) {
 
         // Récupération du service
         $antispam = $this->container->get('oc_symfony_platform.antispam');
@@ -60,13 +63,13 @@ class AdvertController extends Controller {
         $text = "....";
 
         if ($antispam->isSpam($text)) {
-            throw new Exception('Votre message  été détecté comme spam');
+            throw new Exception('Votre message été détecté comme spam');
         }
 
         // Vérification si la requête est en POST
         if ($request->isMethod('POST')) {
             // Création du message flash de confirmation
-            $request->getSession()->getFlashBag()->add('notice', 'L\'annonce à bien été enregistrée');
+            $session->getFlashBag()->add('notice', 'L\'annonce à bien été enregistrée');
 
             // Redirection vers la page de visualisation de cette annonce
             return $this->redirectToRoute('oc_platform_view', array('id' => 5));
