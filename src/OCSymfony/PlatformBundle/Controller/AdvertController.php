@@ -2,10 +2,12 @@
 
 namespace OCSymfony\PlatformBundle\Controller;
 
+use OCSymfony\PlatformBundle\Entity\Advert;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller {
 
@@ -57,14 +59,22 @@ class AdvertController extends Controller {
 
     public function addAction(Request $request, Session $session) {
 
-        // Récupération du service
-        $antispam = $this->container->get('oc_symfony_platform.antispam');
+        // Création de l'entité
+        $advert = new Advert();
+        $advert->setTitle('Recherche de développeur Symfony.');
+        $advert->setAuthor('Alexandre');
+        $advert->setContent('Nous recherchons un développeur Symfony débutant sur Lyon...Blablablabla...');
+        // Date et publication sont définis par défaut
 
-        $text = "....";
+        // Récupération de l'EntityManager
+        $em = $this->getDoctrine()->getManager();
 
-        if ($antispam->isSpam($text)) {
-            throw new Exception('Votre message été détecté comme spam');
-        }
+        // Etape 1 : On "persiste" l'entité
+        $em->persist($advert);
+
+        // Etape 2 : on "flush" tout ce a été persisté avant
+        $em->flush();
+
 
         // Vérification si la requête est en POST
         if ($request->isMethod('POST')) {
@@ -81,13 +91,17 @@ class AdvertController extends Controller {
 
     public function viewAction($id) {
 
-        $advert = array(
-            'title' => 'Recherche développeur Symfony2',
-            'id' => $id,
-            'author' => 'Alexandre',
-            'content' => 'Nous rechercons un développeur Symfony2 pour débuytant sur Lyon. Bla bla...',
-            'date' => new \DateTime()
-        );
+        // Récupération du repository
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('OCSymfonyPlatformBundle:Advert');
+
+        // Récupération de l'entité correspondante à l'id
+        $advert = $repository->find($id);
+
+        if (null === $advert) {
+            throw new NotFoundHttpException("L'annonce d'id ".id."n'existe pas.");
+        }
 
         return $this->render('OCSymfonyPlatformBundle:Advert:view.html.twig', array('advert' => $advert));
     }
