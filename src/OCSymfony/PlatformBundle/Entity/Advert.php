@@ -2,6 +2,7 @@
 
 namespace OCSymfony\PlatformBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,6 +12,22 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="OCSymfony\PlatformBundle\Repository\AdvertRepository")
  */
 class Advert {
+
+    /**
+     * @ORM\OneToMany(targetEntity="OCSymfony\PlatformBundle\Entity\Application", mappedBy="advert")
+     */
+    private $applications;
+    /**
+     * @ORM\OneToOne(targetEntity="OCSymfony\PlatformBundle\Entity\Image", cascade={"persist"})
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="OCSymfony\PlatformBundle\Entity\Category", cascade={"persist"})
+     * @ORM\JoinTable(name="oc_advert_category")
+     */
+    private $categories;
+
     /**
      * @var bool
      * @ORM\Column(name="published", type="boolean")
@@ -57,6 +74,7 @@ class Advert {
     public function __construct() {
         // Par défaut, la date de l'annonce sera la date d'aujourd'hui
         $this->date = new \DateTime();
+        $this->categories = new ArrayCollection();
     }
 
 
@@ -188,5 +206,99 @@ class Advert {
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Image $image
+     *
+     * @return Advert
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \OCSymfony\PlatformBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Category $category
+     *
+     * @return Advert
+     */
+    public function addCategory(Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Category $category
+     */
+    public function removeCategory(Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add application
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Application $application
+     *
+     * @return Advert
+     */
+    public function addApplication(Application $application)
+    {
+        $this->applications[] = $application;
+
+        $application->setAdvert($this)
+
+        return $this;
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Application $application
+     */
+    public function removeApplication(Application $application)
+    {
+        $this->applications->removeElement($application);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
     }
 }
