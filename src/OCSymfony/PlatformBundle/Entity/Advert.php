@@ -277,7 +277,7 @@ class Advert {
     {
         $this->applications[] = $application;
 
-        $application->setAdvert($this)
+        $application->setAdvert($this);
 
         return $this;
     }

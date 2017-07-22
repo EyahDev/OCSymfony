@@ -1,0 +1,301 @@
+<?php
+
+namespace OCSymfony\PlatformBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Comment
+ *
+ * @ORM\Table(name="comment")
+ * @ORM\Entity(repositoryClass="OCSymfony\PlatformBundle\Repository\CommentRepository")
+ */
+class Comment
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="author", type="string", length=255)
+     */
+    private $author;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     */
+    private $content;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="signalement", type="smallint")
+     */
+    private $signalement;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="moderation", type="boolean")
+     */
+    private $moderation;
+
+    /**
+     * @var Article
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments")
+     */
+    private $article;
+
+    /**
+     * @var Comment
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="childs")
+     */
+    private $parent;
+
+    /**
+     * @var Comment
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
+     */
+    private $childs;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $score;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return Comment
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Comment
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Comment
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set signalement
+     *
+     * @param integer $signalement
+     *
+     * @return Comment
+     */
+    public function setSignalement($signalement)
+    {
+        $this->signalement = $signalement;
+
+        return $this;
+    }
+
+    /**
+     * Get signalement
+     *
+     * @return int
+     */
+    public function getSignalement()
+    {
+        return $this->signalement;
+    }
+
+    /**
+     * Set moderation
+     *
+     * @param boolean $moderation
+     *
+     * @return Comment
+     */
+    public function setModeration($moderation)
+    {
+        $this->moderation = $moderation;
+
+        return $this;
+    }
+
+    /**
+     * Get moderation
+     *
+     * @return bool
+     */
+    public function getModeration()
+    {
+        return $this->moderation;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Article $article
+     *
+     * @return Comment
+     */
+    public function setArticle(\OCSymfony\PlatformBundle\Entity\Article $article = null)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \OCSymfony\PlatformBundle\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->childs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Comment $parent
+     *
+     * @return Comment
+     */
+    public function setParent(\OCSymfony\PlatformBundle\Entity\Comment $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \OCSymfony\PlatformBundle\Entity\Comment
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Comment $child
+     *
+     * @return Comment
+     */
+    public function addChild(\OCSymfony\PlatformBundle\Entity\Comment $child)
+    {
+        $this->childs[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Comment $child
+     */
+    public function removeChild(\OCSymfony\PlatformBundle\Entity\Comment $child)
+    {
+        $this->childs->removeElement($child);
+    }
+
+    /**
+     * Get childs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChilds()
+    {
+        return $this->childs;
+    }
+}

@@ -74,5 +74,52 @@ class AdvertSkill
     {
         return $this->level;
     }
-}
 
+    /**
+     * Set advert
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Advert $advert
+     *
+     * @return AdvertSkill
+     */
+    public function setAdvert(Advert $advert = null)
+    {
+        $this->advert = $advert;
+
+        return $this;
+    }
+
+    /**
+     * Get advert
+     *
+     * @return \OCSymfony\PlatformBundle\Entity\Advert
+     */
+    public function getAdvert()
+    {
+        return $this->advert;
+    }
+
+    /**
+     * Set skill
+     *
+     * @param \OCSymfony\PlatformBundle\Entity\Skill $skill
+     *
+     * @return AdvertSkill
+     */
+    public function setSkill(Skill $skill = null)
+    {
+        $this->skill = $skill;
+
+        return $this;
+    }
+
+    /**
+     * Get skill
+     *
+     * @return \OCSymfony\PlatformBundle\Entity\Skill
+     */
+    public function getSkill()
+    {
+        return $this->skill;
+    }
+}
