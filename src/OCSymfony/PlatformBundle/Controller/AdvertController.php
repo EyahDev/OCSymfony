@@ -14,6 +14,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller {
 
+    public function testAction() {
+        $advert = new Advert();
+
+        $advert->setTitle('Recherche développeur');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($advert);
+        $em->flush();
+
+        return new Response('Slug généré : '.$advert->getSlug());
+    }
+
     public function editImageAction($advertId) {
 
         // Accès au EntityManager
@@ -31,13 +43,12 @@ class AdvertController extends Controller {
         return new Response('OK');
     }
 
-    public function menuAction() {
+    public function menuAction($limit) {
+
+        // Accès à l'EntityManager
+        $em = $this->getDoctrine()->getManager();
         // liste du menu
-        $listAdverts = array(
-            array('id' => 2, 'title' => 'Recherche développeur Symfony'),
-            array('id' => 5, 'title' => 'Mission de webmaster'),
-            array('id' => 9, 'title' => 'Offre de stage webdesigner')
-        );
+        $listAdverts = $em->getRepository('OCSymfonyPlatformBundle:Advert')->findBy(array(), array('date' => 'desc'), $limit, 0);
 
         // Retourne le menu avec la liste
         return $this->render('OCSymfonyPlatformBundle:Advert:menu.html.twig', array('listAdverts' => $listAdverts));
@@ -208,10 +219,30 @@ class AdvertController extends Controller {
 
     Public function indexAction($page) {
 
-        // Accès au conteneur
-        $mailer = $this->get('mailer');
+        if ($page < 1) {
+            throw new NotFoundHttpException('La page "'.$page.'" n\'existe pas');
+        }
 
-        // Appel du template
-        return $this->render('OCSymfonyPlatformBundle:Advert:index.html.twig', array('listAdverts' => array()));
+        $nbPerPage = 3;
+
+        // Accès à l'EntityManager
+        $em = $this->getDoctrine()->getManager();
+
+        // Récupération de toutes les annonces
+        $listAdverts = $em->getRepository('OCSymfonyPlatformBundle:Advert')->getAdverts($page, $nbPerPage);
+
+        // Calcul du nombre total de pages necessaires
+        $nbPages = ceil(count($listAdverts) / $nbPerPage);
+
+        if ($page > $nbPages) {
+            throw $this->createNotFoundException("La page" .$page. " n'existe pas.");
+        }
+
+        // Appel du template et passage des annonces en paramètres
+        return $this->render('OCSymfonyPlatformBundle:Advert:index.html.twig', array(
+            'listAdverts' => $listAdverts,
+            'nbPages' => $nbPages,
+            'page' => $page,
+        ));
     }
 }

@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Advert {
 
     /**
-     * @Gedmo\slug(fields={"title"})
+     * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
@@ -35,6 +35,7 @@ class Advert {
      * @ORM\OneToMany(targetEntity="OCSymfony\PlatformBundle\Entity\Application", mappedBy="advert")
      */
     private $applications;
+
     /**
      * @ORM\OneToOne(targetEntity="OCSymfony\PlatformBundle\Entity\Image", cascade={"persist"})
      */
@@ -381,5 +382,29 @@ class Advert {
 
     public function decreaseApplications() {
         $this->nbApplications--;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Advert
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
