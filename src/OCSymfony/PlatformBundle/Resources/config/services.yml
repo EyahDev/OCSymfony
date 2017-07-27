@@ -20,3 +20,8 @@ services:
                 - "@oc_symfony_platform.email.application_mailer"
             tag:
                 - { name: doctrine.event_listener, event: postPersist }
+
+    oc_symfony_platform.purge.advert:
+            class: OCSymfony\PlatformBundle\Purge\OCPurge
+            arguments:
+                - "@doctrine.orm.entity_manager"

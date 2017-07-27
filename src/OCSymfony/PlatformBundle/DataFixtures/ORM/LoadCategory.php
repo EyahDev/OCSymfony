@@ -2,7 +2,6 @@
 
 namespace OCSymfony\PlatformBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OCSymfony\PlatformBundle\Entity\Category;

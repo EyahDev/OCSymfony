@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block ocplatform_body %}
+
+    {% for message in app.session.flashbag.get('notice') %}
+        <p class="alert alert-info">{{ message }}</p>
+    {% endfor %}
+    7
     <h2>Liste des annonces</h2>
 
     <ul>

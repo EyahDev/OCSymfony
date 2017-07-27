@@ -31,3 +31,10 @@ oc_symfony_platform_delete:
         _controller: OCSymfonyPlatformBundle:Advert:delete
     requirements:
         id: \d+
+
+oc_symfony_platform_purge:
+    path:      /purge/{days}
+    defaults:
+        _controller: OCSymfonyPlatformBundle:Advert:purge
+    requirements:
+        days: \d+

@@ -90,6 +90,9 @@ class Advert {
      */
     private $content;
 
+    /**
+     * Advert constructor.
+     */
     public function __construct() {
         // Par défaut, la date de l'annonce sera la date d'aujourd'hui
         $this->date = new \DateTime();

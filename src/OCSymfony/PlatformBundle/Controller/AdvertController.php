@@ -14,6 +14,36 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller {
 
+    /**
+     * Action de purge des annonces datant de X jours
+     *
+     * @param $days
+     * @return Response
+     */
+    public function purgeAction(Session $session, $days) {
+        // Récupération du service
+        $purge = $this->get('oc_symfony_platform.purge.advert');
+
+        //Lancement de la purge
+        $traitement = $purge->purge($days);
+
+        // Condition si la purge à eu lieux ou non
+        if ($traitement) {
+            // Création du message flash de confirmation
+            $session->getFlashBag()->add('notice', 'Purge : Les annonces ont bien été supprimer');
+
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('oc_symfony_platform_homepage');
+        } else {
+            // Création du message flash de confirmation
+            $session->getFlashBag()->add('notice', 'Purge : Aucune annonce à supprimer');
+
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('oc_symfony_platform_homepage');
+        }
+
+    }
+
     public function testAction() {
         $advert = new Advert();
 
@@ -101,7 +131,7 @@ class AdvertController extends Controller {
             $session->getFlashBag()->add('notice', 'L\'annonce à bien été modifiée');
 
             // Redirection vers la page de visualisation de cette annonce
-            return $this->redirectToRoute('oc_platform_view', array('id' => $id));
+            return $this->redirectToRoute('oc_symfony_platform_view', array('id' => $id));
         }
         // Si ce n'est pas POST
         return $this->render('OCSymfonyPlatformBundle:Advert:edit.html.twig', array('advert' => $advert));
@@ -181,7 +211,7 @@ class AdvertController extends Controller {
             $session->getFlashBag()->add('notice', 'L\'annonce à bien été enregistrée');
 
             // Redirection vers la page de visualisation de cette annonce
-            return $this->redirectToRoute('oc_platform_view', array('id' => 5));
+            return $this->redirectToRoute('oc_symfony_platform_view', array('id' => 5));
         }
         // Si ce n'est pas POST
         return $this->render('OCSymfonyPlatformBundle:Advert:add.html.twig');

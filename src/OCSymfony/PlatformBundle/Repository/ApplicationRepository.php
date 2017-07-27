@@ -19,5 +19,4 @@ class ApplicationRepository extends EntityRepository {
         // Enfin, on retourne le résultat
         return $qb->getQuery()->getResult();
     }
-
 }

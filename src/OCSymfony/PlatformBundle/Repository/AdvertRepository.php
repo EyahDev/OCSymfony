@@ -6,7 +6,33 @@ use Doctrine\ORM\EntityRepository;
 Use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
-class AdvertRepository extends \Doctrine\ORM\EntityRepository {
+class AdvertRepository extends EntityRepository {
+
+    /**
+     * Récupération des annonces sans applications
+     *
+     * @param $days
+     * @return array
+     */
+    public function getAdvertsWithoutApplications($days) {
+
+        // Accès au QueryBuilder
+        $qb = $this->createQueryBuilder('a');
+
+        // Récupération de la date du jour et retrait du nombre de jours défini
+        $date = date("Y-m-d", strtotime("-".$days." days"));
+
+        // Requête de récupération des annonces sans applications
+        $qb->where('a.applications IS EMPTY')
+            ->andWhere('a.updatedAt <= :date')
+            ->orWhere('a.date <= :date AND a.updatedAt IS NULL')->setParameter('date', $date);
+
+        // Récupération des résultats
+        $nbAdvert = $qb->getQuery()->getResult();
+
+        // Retourne les résultats
+        return $nbAdvert;
+    }
 
     public function myFindAll() {
 
