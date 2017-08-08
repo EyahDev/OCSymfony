@@ -105,18 +105,20 @@ class AdvertController extends Controller {
             foreach ($advert->getCategories() as $category) {
                 $advert->removeCategory($category);
             }
-
             // Suppression de l'annonce
             $em->remove($advert);
 
             // Execution des suppression
             $em->flush();
 
+            // création d'un message flash
             $session->getFlashBag()->add('notice', 'l\'annonce bien été supprimée');
 
+            // Redirection vers la page d'accueil
             return $this->redirectToRoute('oc_symfony_platform_homepage');
         }
 
+        // Chargement d'une page de confirmation avant la suppression
         return $this->render('OCSymfonyPlatformBundle:Advert:delete.html.twig', array(
             'advert' => $advert,
             'form' => $form->createView()
