@@ -7,7 +7,7 @@ oc_symfony_platform_homepage:
         page: \d*
 
 oc_symfony_platform_view:
-    path:      /advert/{id}
+    path:      /advert/{slug}
     defaults:
         _controller: OCSymfonyPlatformBundle:Advert:view
     requirements:

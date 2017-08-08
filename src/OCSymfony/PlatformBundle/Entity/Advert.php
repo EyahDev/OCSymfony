@@ -37,7 +37,7 @@ class Advert {
     private $applications;
 
     /**
-     * @ORM\OneToOne(targetEntity="OCSymfony\PlatformBundle\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="OCSymfony\PlatformBundle\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
 
@@ -97,6 +97,7 @@ class Advert {
         // Par défaut, la date de l'annonce sera la date d'aujourd'hui
         $this->date = new \DateTime();
         $this->categories = new ArrayCollection();
+        $this->applications = new ArrayCollection();
     }
 
 

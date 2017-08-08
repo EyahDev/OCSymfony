@@ -9,19 +9,19 @@
     {% for message in app.session.flashbag.get('notice') %}
         <p class="alert alert-info">{{ message }}</p>
     {% endfor %}
-    7
+
     <h2>Liste des annonces</h2>
 
     <ul>
         {% for advert in listAdverts %}
             <li>
-                <a href="{{ path('oc_symfony_platform_view', {'id': advert.id}) }}">{{ advert.title }}</a> par {{ advert.author }}, le {{ advert.date|date('d/m/Y') }}
+                <a href="{{ path('oc_symfony_platform_view', {'slug': advert.slug}) }}">{{ advert.title }}</a> par {{ advert.author }}, le {{ advert.date|date('d/m/Y') }}
             </li>
         {% else %}
             <li>Il n'y a pas encore d'annonces !</li>
         {% endfor %}
     </ul>
-
+     {{ dump(listAdverts)  }}
     <ul class="pagination">
         {% for p in range(1, nbPages) %}
            <li{% if p == page %} class="active" {% endif %}>

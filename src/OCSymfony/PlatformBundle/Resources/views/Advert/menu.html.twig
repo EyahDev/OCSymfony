@@ -1,7 +1,7 @@
 <ul class="nav nav-pills nav-stacked">
     {% for advert in listAdverts %}
         <li>
-            <a href="{{ path('oc_symfony_platform_view', {'id':advert.id}) }}">
+            <a href="{{ path('oc_symfony_platform_view', {'slug':advert.slug}) }}">
                 {{ advert.title }}
             </a>
         </li>

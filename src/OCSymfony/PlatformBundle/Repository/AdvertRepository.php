@@ -25,13 +25,29 @@ class AdvertRepository extends EntityRepository {
         // Requête de récupération des annonces sans applications
         $qb->where('a.applications IS EMPTY')
             ->andWhere('a.updatedAt <= :date')
-            ->orWhere('a.date <= :date AND a.updatedAt IS NULL')->setParameter('date', $date);
+            ->orWhere('a.date <= :date AND a.updatedAt IS NULL')
+            ->setParameter('date', $date);
 
         // Récupération des résultats
         $nbAdvert = $qb->getQuery()->getResult();
 
         // Retourne les résultats
         return $nbAdvert;
+    }
+
+    public function deleteAdvertsWithoutApplications($days) {
+
+        $qb = $this->createQueryBuilder('a');
+
+        // Récupération de la date du jour et retrait du nombre de jours défini
+        $date = date("Y-m-d", strtotime("-".$days." days"));
+
+        return $qb->delete()
+            ->where('a.applications IS EMPTY')
+            ->andWhere('a.updatedAt <= :date')
+            ->orWhere('a.date <= :date AND a.updatedAt IS NULL')
+            ->setParameter('date', $date)
+            ->getQuery()->execute();
     }
 
     public function myFindAll() {

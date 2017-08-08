@@ -15,60 +15,56 @@ class LoadAdvert implements FixtureInterface {
         $adverts =
             array(
                 array(
-                    'Annonce 1' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 1',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
                 array(
-                    'Annonce 2' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 2',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
                 array(
-                    'Annonce 3' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 3',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
                 array(
-                    'Annonce 4' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 4',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
                 array(
-                    'Annonce 5' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 5',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
                 array(
-                    'Annonce 6' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 6',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
                 array(
-                    'Annonce 6' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 7',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
                 array(
-                    'Annonce 7' => 'title',
-                    'Alexandre' => 'author',
-                    'Contenu' => 'content'
+                    'title' => 'Annonce 8',
+                    'author' => 'Alexandre',
+                    'content' => 'Contenu'
                 ),
         );
 
-        foreach ($adverts as $advert) {
-            foreach ($advert as $content) {
+        foreach ($adverts as $ad) {
+            // Création des annonces
+            $advert = new Advert();
+            $advert->setTitle($ad['title']);
+            $advert->setAuthor($ad['author']);
+            $advert->setContent($ad['content']);
 
-                // Création des annonces
-                $advert = new Advert();
-                $advert->setTitle($content);
-                $advert->setAuthor($content);
-                $advert->setContent($content);
-
-                // Enregistrement
-                $manager->persist($advert);
-            }
-
+            // Enregistrement
+            $manager->persist($advert);
         }
 
         // Execution
