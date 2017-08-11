@@ -25,3 +25,11 @@ services:
             class: OCSymfony\PlatformBundle\Purge\OCPurge
             arguments:
                 - "@doctrine.orm.entity_manager"
+
+    oc_symfony_platform.validator.antiflood:
+            class: OCSymfony\PlatformBundle\Validator\AntiFlood
+            arguments:
+                - "@request_stack"
+                - "@doctrine.orm.entity_manager"
+            tags:
+                - { name: validator.constraint_validator, alias: oc_symfony_platform_antiflood }

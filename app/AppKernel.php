@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new OCSymfony\PlatformBundle\OCSymfonyPlatformBundle(),
             new OCSymfony\CoreBundle\OCSymfonyCoreBundle(),
             new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new OCSymfony\UserBundle\OCSymfonyUserBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

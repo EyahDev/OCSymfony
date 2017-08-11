@@ -126,4 +126,5 @@ class AdvertRepository extends EntityRepository {
 
         return new Paginator($query, true);
     }
+
 }

@@ -5,6 +5,8 @@ namespace OCSymfony\PlatformBundle\Controller;
 use OCSymfony\PlatformBundle\Form\AdvertEditType;
 use OCSymfony\PlatformBundle\Form\AdvertType;
 use OCSymfony\PlatformBundle\Entity\Advert;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -162,7 +164,23 @@ class AdvertController extends Controller {
             ));
     }
 
+    /**
+     * @param Request $request
+     * @param Session $session
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function addAction(Request $request, Session $session) {
+
+        /*
+        // Vérification du role de l'utilisateur
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_AUTEUR')) {
+
+            // Génère une page "Accès refusé"
+            throw new AccessDeniedException('Accès limités aux auteurs');
+        }
+        */
 
         // Accès à l'EntityManager
         $em = $this->getDoctrine()->getManager();
