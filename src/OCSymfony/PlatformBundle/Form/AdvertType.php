@@ -26,7 +26,7 @@ class AdvertType extends AbstractType
             ->add('date', DateTimeType::class)
             ->add('title', TextType::class)
             ->add('author', TextType::class)
-            ->add('content', TextareaType::class)
+            ->add('content', CkeditorType::class)
             ->add('image', ImageType::class, array('required' => false))
             ->add('categories', EntityType::class, array(
                 'class'        => 'OCSymfonyPlatformBundle:Category',

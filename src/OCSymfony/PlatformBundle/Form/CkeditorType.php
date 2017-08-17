@@ -1,0 +1,28 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Adrien
+ * Date: 11/08/2017
+ * Time: 12:02
+ */
+
+namespace OCSymfony\PlatformBundle\Form;
+
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class CkeditorType extends AbstractType {
+
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults(array(
+            'attr' => array('class' => 'ckeditor')
+        ));
+    }
+
+    public function getParent() {
+        return TextareaType::class;
+    }
+
+}

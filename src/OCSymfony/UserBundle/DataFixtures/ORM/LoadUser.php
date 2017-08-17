@@ -31,7 +31,7 @@ class LoadUser implements FixtureInterface
             $user->setSalt('');
 
             // Définition du role de base de chaque utilisateur
-            $user->setRoles(array('ROLE_USER'));
+            $user->setRoles(array('ROLE_AUTEUR'));
 
             // Enregistrement
             $manager->persist($user);

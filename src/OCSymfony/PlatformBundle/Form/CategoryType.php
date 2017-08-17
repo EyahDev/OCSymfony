@@ -20,6 +20,7 @@ class CategoryType extends AbstractType
         $builder->add('categories', EntityType::class, array(
             'class' => 'OCSymfonyPlatformBundle:Category',
             'choice_label' => 'name',
+            'expanded' => true,
             'multiple' => true,
             'query_builder' => function(CategoryRepository $repository) use($pattern) {
                 return $repository->getLikeQueryBuilder($pattern);

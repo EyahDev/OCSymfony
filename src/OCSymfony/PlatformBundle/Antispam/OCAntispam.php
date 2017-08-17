@@ -9,9 +9,8 @@ class OCAntispam {
     private $locale;
     private $minLenght;
 
-    public function __construct(\Swift_Mailer $mailer, $locale, $minlenght) {
+    public function __construct(\Swift_Mailer $mailer, $minlenght) {
         $this->mailer = $mailer;
-        $this->locale = $locale;
         $this->minLenght = (int) $minlenght;
     }
 
@@ -23,5 +22,9 @@ class OCAntispam {
      */
     public function isSpam($text) {
         return strlen($text) < $this->minLenght;
+    }
+
+    public function setLocale($locale) {
+        $this->locale = $locale;
     }
 }

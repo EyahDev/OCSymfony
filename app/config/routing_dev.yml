@@ -12,3 +12,8 @@ _errors:
 
 _main:
     resource: routing.yml
+
+oc_symfony_platform_translation:
+    path: /{_locale}/traduction/{name}
+    defaults:
+        _controller: OCSymfonyPlatformBundle:Advert:translation

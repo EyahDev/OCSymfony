@@ -19,8 +19,8 @@ class AntiFloodValidator extends ConstraintValidator {
     }
 
     public function validate($value, Constraint $constraint) {
-
-        // Récupération de la requête
+        return;
+        /*// Récupération de la requête
         $request = $this->requestStack->getCurrentRequest();
 
         // Récupération de l'adresse ip
@@ -36,7 +36,7 @@ class AntiFloodValidator extends ConstraintValidator {
 
             // Déclenchement de l'erreur
             $this->context->addViolation($constraint->message);
-        }
+        }*/
     }
 
 }

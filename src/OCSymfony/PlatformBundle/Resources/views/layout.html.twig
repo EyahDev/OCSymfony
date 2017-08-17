@@ -10,11 +10,9 @@
 
 {% block rubriques %}
     <h3>Les annonces</h3>
-    <ul class="nav nav-pulls nav-stacked">
+    <ul>
         <li><a href="{{ path('oc_symfony_platform_homepage') }}">Accueil</a></li>
-    {% if is_granted('ROLE_AUTEUR') %}
         <li><a href="{{ path('oc_symfony_platform_add') }}">Ajouter une annonce</a></li>
-    {% endif %}
     </ul>
 {% endblock %}
 

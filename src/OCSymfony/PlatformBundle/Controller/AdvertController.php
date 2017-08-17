@@ -5,6 +5,7 @@ namespace OCSymfony\PlatformBundle\Controller;
 use OCSymfony\PlatformBundle\Form\AdvertEditType;
 use OCSymfony\PlatformBundle\Form\AdvertType;
 use OCSymfony\PlatformBundle\Entity\Advert;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -168,8 +169,6 @@ class AdvertController extends Controller {
      * @param Request $request
      * @param Session $session
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     *
-     * @Security("has_role('ROLE_AUTEUR')")
      */
     public function addAction(Request $request, Session $session) {
 
@@ -210,6 +209,12 @@ class AdvertController extends Controller {
 
     }
 
+    /**
+     * @param Advert $advert
+     * @return Response
+     *
+     * @ParamConverter("advert", options={"mapping": {"slug": "slug"}})
+     */
     public function viewAction(Advert $advert) {
 
         // Récupération du repository
@@ -259,5 +264,9 @@ class AdvertController extends Controller {
             'nbPages' => $nbPages,
             'page' => $page,
         ));
+    }
+
+    public function translationAction($name) {
+        return $this->render('OCSymfonyPlatformBundle:Advert:translation.html.twig', array('name' => $name));
     }
 }
